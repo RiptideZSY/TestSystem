@@ -8,6 +8,7 @@ import "./css/app.css";
 import "./css/color.css";
 import "./bootstrap/css/bootstrap.min.css";
 import "./css/style.css";
+import "./css/charts.css"
 
 
 function Wrapper(props) {

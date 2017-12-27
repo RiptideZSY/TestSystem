@@ -1,0 +1,37 @@
+/*schedule bar css*/
+#backBar {
+    display: inline-block;
+    width: 200px;
+    height: 4px;
+    background: #ddd;
+    border-radius: 3px;
+    position: relative;
+    margin-left: 20px;
+}
+
+#scheduleBar input{
+    border: 1px solid #ddd;
+    width: 50px;
+    text-align: center;
+    vertical-align: top;
+    margin-left: 10px;
+}
+
+#circle {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50% 50%;
+    background: #177ad8;
+    position: absolute;
+    margin-top: -4px;
+    cursor: pointer;
+    box-shadow: 0px 0px 3px #177ad8;
+}
+
+#frontBar {
+    width: 0px;
+    height: 4px;
+    background-color: #177ad8;
+    border-radius: 3px;
+}

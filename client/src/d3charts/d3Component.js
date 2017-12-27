@@ -1,15 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {
-  autorun
-} from 'mobx'
-//import d3 from 'd3'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { autorun } from 'mobx';
 
 export default class D3Component extends React.Component {
   static propTypes = {
     width: PropTypes.number,
     height: PropTypes.number,
   }
+
+  constructor(props) {
+    super(props);
+  }
+
   componentDidMount() {
     autorun(() => this.renderGraph(this.g, this.props))
   }

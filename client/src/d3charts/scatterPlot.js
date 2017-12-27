@@ -81,5 +81,8 @@ export default class ScatterPlot extends D3Component {
       .attr("cy", (d) => yScale(d.y))
       .attr("r", (d) => Math.sqrt(circleArea))
       .attr("fill", color);
+
+    scatterPoints.append("title")
+      .text((d) => `(${d.x},${d.y})`);
   }
 }

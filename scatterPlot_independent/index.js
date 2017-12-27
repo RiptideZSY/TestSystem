@@ -243,6 +243,36 @@ yAxisSlider.addEventListener("input", () => {
   updateInnerRim();
   updateChart();
 }, false);
+//
+
+//
+let wholeScroller = scroller.append("div")
+  .attr("class", "wholeScroller");
+
+document.querySelector(".wholeScroller").innerHTML = "whole";
+
+wholeScroller.append("input")
+  .attr("id", "scroller7")
+  .attr("type", "range")
+  .attr("min", 1)
+  .attr("max", 100)
+  .attr("value", 1);
+
+let wholeSlider = document.querySelector("#scroller7");
+
+wholeSlider.addEventListener("input", () => {
+  margin = { left: Math.round(bodyHeight * 0.2 * wholeSlider.value / 100), 
+    right: Math.round(bodyHeight * 0.2 * wholeSlider.value / 100), 
+    top: Math.round(bodyHeight * 0.2 * wholeSlider.value / 100), 
+    bottom: Math.round(bodyHeight * 0.2 * wholeSlider.value / 100)
+  };
+  updateOuterRim();
+  updateInnerRim();
+  updateChart();
+  tmpCircleArea = circleArea / wholeSlider.value;
+  scatterPoints.attr("r", Math.sqrt(tmpCircleArea));
+}, false);
+//
 
 //
 function updateOuterRim() {

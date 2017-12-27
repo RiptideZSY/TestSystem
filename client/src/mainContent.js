@@ -116,9 +116,7 @@ function ContentBody(props) {
 	              			<h3 className="box-title">1</h3>
 	              		</div>
 			            <div className="box-body">
-			             	<svg className = "original-graph" width = "806.5" height = "785">
-                      <ScatterPlot svgWidth = {806.5} svgHeight = {785} color = "teal" />
-                    </svg>
+			             	
 			            </div>
 			        </div>
 			    </div>
@@ -128,9 +126,7 @@ function ContentBody(props) {
 	              			<h3 className="box-title">2</h3>
 	              		</div>
 			            <div className="box-body">
-                    <svg className = "designed-graph" width = "806.5" height = "785">
-                    <ScatterPlot svgWidth = {806.5} svgHeight = {785} color = "#2980B9" />
-                    </svg>
+                   
 			            </div>
 			        </div>
 			    </div>

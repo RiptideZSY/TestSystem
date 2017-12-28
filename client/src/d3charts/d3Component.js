@@ -22,4 +22,5 @@ export default class D3Component extends React.Component {
       <g ref={(g) => { this.g = g }} width={this.props.width} height={this.props.height} />
     )
   }
+
 }

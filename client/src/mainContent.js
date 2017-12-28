@@ -124,7 +124,7 @@ class ContentScheduleBar extends React.Component {
 		this.handleInputChange = this.handleInputChange.bind(this);
 		this.state = {
 			isfalse: false, //控制鼠标点击
-			inputValue: "",
+			inputValue: 0,
 			x: 0,
 			offsetLeft: 0, //圆离最左边的距离
 			barWidth: 0, //进度条的总宽度
@@ -157,6 +157,11 @@ class ContentScheduleBar extends React.Component {
 			circleMarginLeft: Math.max(0, moveX) + "px",
 			frontBarWidth: moveX + "px"
 		});
+		// console.log("x:" + this.state.x);
+		// console.log("offsetLeft:" + this.state.offsetLeft);
+		// console.log("circleMarginLeft:" + this.state.circleMarginLeft);
+		// console.log("barWidth:" + this.state.barWidth);
+		// console.log("frontBarWidth:" + this.state.frontBarWidth);
 	}
 	handleMouseUp(event) {
 		this.setState({
@@ -168,13 +173,11 @@ class ContentScheduleBar extends React.Component {
 		var minValue = 0;
 		var maxValue = 100;
 		var currentValue = event.target.value;
-
-		//var theV = this.state.inputValue * 1;
 		if (currentValue > maxValue || currentValue < minValue) {
 			alert("输入的数值不正确");
 			//input.value ="";
 			this.setState({
-				inputValue: "",
+				inputValue: 0,
 				circleMarginLeft: "0px",
 				frontBarWidth: "0px"
 			});
@@ -197,7 +200,6 @@ class ContentScheduleBar extends React.Component {
 		var styleFrontBar = {
 			width: this.state.frontBarWidth
 		};
-		const Width = 20;
 		return (
 			<div>
 				<div id="scheduleBar" onMouseMove={this.handleMouseMove} onMouseUp={this.handleMouseUp}>
@@ -209,7 +211,7 @@ class ContentScheduleBar extends React.Component {
         		</div>
         		<svg id="main-svg" style={{width: 529.5, height: 529.5, top: 0, left: 0}}>
 			        <g>
-						<BarChart widthPercent = {Width}/>
+						<BarChart widthPercent = {this.state.inputValue}/>
 			        </g>
 			    </svg>		       
 			</div>

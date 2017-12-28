@@ -3,15 +3,22 @@ import D3Component from './d3Component'
 // import {
 // 	observer
 // } from 'mobx-react'
+
 // @observer
 export default class BarChart extends D3Component {
-
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.widthPercent !== this.props.widthPercent) {
+			//svg.selectAll( * ).remove()
+			this.renderGraph(this.g, this.props)
+		}
+	}
 	renderGraph = (gDOM, props) => {
 		const {
 			widthPercent
 		} = props;
+
 		console.log(widthPercent);
-		console.log(props);
+		//console.log(props);
 		var myData = [];
 		var dataCount = 20;
 		for (var i = 0; i < dataCount; i++) {
@@ -48,6 +55,11 @@ export default class BarChart extends D3Component {
 		for (var i = 0; i < dataCount; i++) {
 			colors.push(color[Math.floor(Math.random() * color.length + 1) - 1]);
 		}
+		//d3.select(gDOM).select('svg').selectAll('g').remove();
+		d3.select(gDOM).select('svg').remove();
+		//d3.select('svg').remove();
+		//console.log("gdom: " + gDOM);
+		var myWidthPercent = (widthPercent == 0) ? xScale.rangeBand() * 20 : widthPercent;
 		var myChart = d3.select(gDOM).append('svg')
 			.attr('width', width + margin.right + margin.left)
 			.attr('height', height + margin.top + margin.bottom)
@@ -60,7 +72,7 @@ export default class BarChart extends D3Component {
 			.style('fill', function(d, i) {
 				return colors[i];
 			})
-			.attr('width', xScale.rangeBand() * widthPercent * 0.01)
+			.attr('width', xScale.rangeBand() * myWidthPercent * 0.01)
 			.attr('height', 0)
 			.attr('x', function(d, i) {
 				return xScale(i);
@@ -102,7 +114,7 @@ export default class BarChart extends D3Component {
 			.orient('left')
 			.ticks(5)
 			.tickPadding(5);
-		var vGuide = d3.select('svg')
+		var vGuide = d3.select(gDOM).select('svg')
 			.append('g')
 		vAxis(vGuide)
 		vGuide.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
@@ -117,7 +129,7 @@ export default class BarChart extends D3Component {
 			.tickValues(hScale.domain().filter(function(d, i) {
 				return !(i % (myData.length / 5));
 			}));
-		var hGuide = d3.select('svg')
+		var hGuide = d3.select(gDOM).select('svg')
 			.append('g')
 		hAxis(hGuide)
 		hGuide.attr('transform', 'translate(' + margin.left + ',' + (height + margin.top) + ')')

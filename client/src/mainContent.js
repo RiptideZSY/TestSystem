@@ -1,22 +1,12 @@
 import React from "react";
 import BarChart from "./d3charts/barChart"
+import LineChart from "./d3charts/lineChart"
 import {
 	observer
 } from 'mobx-react'
 import {
 	observable
 } from 'mobx';
-// function ContentHeader(props) {
-// 	return (
-// 		<section className="content-header">
-//       		<h1>放内容的面板</h1>
-//       		<ol className="breadcrumb">
-//         		<li><a href="#"><i className="fa fa-dashboard"></i> USERSTUDY</a></li>
-//         		<li className="active">主页面</li>
-//       		</ol>
-//     	</section>
-// 	);
-// }
 
 function PreviousButton(props) {
 	return (
@@ -114,7 +104,7 @@ function ContentProgressBar(props) {
          			</div>
         		</div>
 			</div>*/
-//var circle = document.getElementById("circle");
+
 class ContentScheduleBar extends React.Component {
 	constructor(props) {
 		super(props);
@@ -122,6 +112,12 @@ class ContentScheduleBar extends React.Component {
 		this.handleMouseMove = this.handleMouseMove.bind(this);
 		this.handleMouseUp = this.handleMouseUp.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleFlushData = this.handleFlushData.bind(this);
+		var datatmp = [];
+		var dataCount = 20;
+		for (var i = 0; i < dataCount; i++) {
+			datatmp.push(Math.round(Math.random() * 500));
+		}
 		this.state = {
 			isfalse: false, //控制鼠标点击
 			inputValue: 0,
@@ -129,7 +125,8 @@ class ContentScheduleBar extends React.Component {
 			offsetLeft: 0, //圆离最左边的距离
 			barWidth: 0, //进度条的总宽度
 			circleMarginLeft: 0, //圆离进度条最左边的距离
-			frontBarWidth: 0
+			frontBarWidth: 0,
+			myData: datatmp
 		};
 	}
 	handleMouseDown(event) {
@@ -190,8 +187,16 @@ class ContentScheduleBar extends React.Component {
 				frontBarWidth: val + "px"
 			});
 		}
-
-
+	}
+	handleFlushData() {
+		var datatmp = [];
+		var dataCount = 20;
+		for (var i = 0; i < dataCount; i++) {
+			datatmp.push(Math.round(Math.random() * 500));
+		}
+		this.setState({
+			myData: datatmp
+		});
 	}
 	render() {
 		var styleCircle = {
@@ -209,9 +214,10 @@ class ContentScheduleBar extends React.Component {
 	            		<div id="frontBar" style={styleFrontBar}></div>
 	        		</div>
         		</div>
+        		<button className="btn btn-success" onClick={this.handleFlushData}>刷新数据</button>
         		<svg id="main-svg" style={{width: 529.5, height: 529.5, top: 0, left: 0}}>
 			        <g>
-						<BarChart widthPercent = {this.state.inputValue}/>
+						<BarChart widthPercent = {this.state.inputValue} data= {this.state.myData}/>
 			        </g>
 			    </svg>		       
 			</div>
@@ -222,6 +228,7 @@ class ContentScheduleBar extends React.Component {
 
 function ContentBody(props) {
 	return (
+
 		<div className="row">
         		<div className="col-md-6">
         			<div className="box box-solid">
@@ -237,10 +244,15 @@ function ContentBody(props) {
 			    <div className="col-md-6">
         			<div className="box box-solid">
 	            		<div className="box-header with-border">
-	              			<h3 className="box-title">2</h3>
+	              			<h3 className="box-title">LineChart</h3>
 	              		</div>
 			            <div className="box-body">
 			            	
+			            	<svg id="main-svg" style={{width: 529.5, height: 529.5, top: 0, left: 0}}>
+			        <g>
+						<LineChart />
+			        </g>
+			    </svg>	
 			            </div>
 			        </div>
 			    </div>

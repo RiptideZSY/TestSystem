@@ -7,26 +7,22 @@ import D3Component from './d3Component'
 // @observer
 export default class BarChart extends D3Component {
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.widthPercent !== this.props.widthPercent) {
+		if (nextProps.widthPercent != this.props.widthPercent || nextProps.data != this.props.data) {
 			//svg.selectAll( * ).remove()
 			this.renderGraph(this.g, this.props)
 		}
 	}
 	renderGraph = (gDOM, props) => {
 		const {
-			widthPercent
+			widthPercent,
+			data
 		} = props;
+		var myData = data;
+		var dataCount = myData.length;
 
-		console.log(widthPercent);
-		//console.log(props);
-		var myData = [];
-		var dataCount = 20;
-		for (var i = 0; i < dataCount; i++) {
-			myData.push(Math.round(Math.random() * 500));
-		}
-		myData.sort(function(a, b) {
-			return a - b;
-		});
+		// myData.sort(function(a, b) {
+		// 	return a - b;
+		// });
 		var margin = {
 			top: 30,
 			right: 30,
@@ -35,8 +31,8 @@ export default class BarChart extends D3Component {
 		}
 		var height = 500 - margin.top - margin.bottom;
 		var width = 500 - margin.right - margin.left;
-		var animateDuration = 700;
-		var animateDelay = 30;
+		//var animateDuration = 700;
+		//var animateDelay = 30;
 		var tooltip = d3.select('body').append('div')
 			.style('position', 'absolute')
 			.style('background', '#f4f4f4')
@@ -56,10 +52,10 @@ export default class BarChart extends D3Component {
 			colors.push(color[Math.floor(Math.random() * color.length + 1) - 1]);
 		}
 		//d3.select(gDOM).select('svg').selectAll('g').remove();
+		d3.select(gDOM).select('svg').selectAll('g').remove();
 		d3.select(gDOM).select('svg').remove();
-		//d3.select('svg').remove();
-		//console.log("gdom: " + gDOM);
-		var myWidthPercent = (widthPercent == 0) ? xScale.rangeBand() * 20 : widthPercent;
+		//var myWidthPercent = (widthPercent == 0) ? 20 : widthPercent; //最小为xScale的百分之20
+		//console.log(myWidthPercent);
 		var myChart = d3.select(gDOM).append('svg')
 			.attr('width', width + margin.right + margin.left)
 			.attr('height', height + margin.top + margin.bottom)
@@ -72,7 +68,7 @@ export default class BarChart extends D3Component {
 			.style('fill', function(d, i) {
 				return colors[i];
 			})
-			.attr('width', xScale.rangeBand() * myWidthPercent * 0.01)
+			.attr('width', xScale.rangeBand() * widthPercent * 0.01)
 			.attr('height', 0)
 			.attr('x', function(d, i) {
 				return xScale(i);
@@ -97,12 +93,12 @@ export default class BarChart extends D3Component {
 			})
 			.attr('y', function(d) {
 				return height - yScale(d)
-			})
-			.duration(animateDuration)
-			.delay(function(d, i) {
-				return i * animateDelay
-			})
-			.ease('elastic');
+			});
+		//.duration(animateDuration)
+		// .delay(function(d, i) {
+		// 	return i * animateDelay
+		// })
+		// .ease('elastic');
 		var vScale = d3.scale.linear()
 			.domain([0, d3.max(myData)])
 			.range([height, 0]);

@@ -11,6 +11,7 @@ import "./css/style.css";
 import "./css/charts.css"
 
 
+
 function Wrapper(props) {
 	return (
 		<div className="wrapper">

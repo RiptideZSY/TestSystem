@@ -1,5 +1,4 @@
 import React from "react";
-import ScatterPlot from "./d3charts/scatterPlot.js";
 
 // function ContentHeader(props) {
 // 	return (

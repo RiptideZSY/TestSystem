@@ -11,8 +11,8 @@ module.exports = {
     contentBase: path.join(__dirname, "client/dist")
   },
   module: {
-    rules: [{
-      test: /\.js[x]?$/,
+    rules: [{ 
+      test: /\.(js|jsx)$/,
       exclude: /(node_modules|bower_components)/,
       use: [{
         loader: "babel-loader"

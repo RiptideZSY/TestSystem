@@ -1,7 +1,9 @@
 import * as d3 from "d3";
 import D3Component from "./d3Component";
+import { inject, observer } from 'mobx-react';
 
 
+@observer
 export default class ScatterPlot extends D3Component {
   renderGraph = (gDOM, props) => {
     console.log("scatterPlot!");

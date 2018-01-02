@@ -8,8 +8,7 @@ import D3Component from './d3Component'
 export default class BarChart extends D3Component {
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.widthPercent != this.props.widthPercent || nextProps.data != this.props.data) {
-			//svg.selectAll( * ).remove()
-			this.renderGraph(this.g, this.props)
+			this.renderGraph(this.g, nextProps);
 		}
 	}
 	renderGraph = (gDOM, props) => {

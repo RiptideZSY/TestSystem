@@ -10,13 +10,14 @@ export default class LineChart extends D3Component {
 	renderGraph = (gDOM, props) => {
 		const {
 			strokeWidth,
-			data
+			data,
+			lineNames
 		} = props;
 		var dataset = [];
 		//var lines = []; //保存折线图对象
 		var lines = [];
 		var xMarks = [];
-		var lineNames = ["line1"]; //保存系列名称
+		//var lineNames = ["line1"]; //保存系列名称
 		var lineColor = ["#757575", "#43A047", "#795548"];
 		var w = 529.5;
 		var h = 529.5;
@@ -32,8 +33,8 @@ export default class LineChart extends D3Component {
 		//模拟数据
 		//getData();
 		dataset = data;
-
-		for (var i = 0; i < dataset.length; i++) {
+		//console.log(dataset);
+		for (var i = 0; i < dataset[0].length; i++) {
 			xMarks.push(i);
 		}
 		//判断是否多维数组，如果不是，则转为多维数组

@@ -249,7 +249,7 @@ class ContentScheduleBar extends React.Component {
 					
 					<svg id="main-svg" style={{width: 529.5, height: 529.5, top: 0, left: 0}}>
 						<g>
-							<LineChart strokeWidth = {this.state.inputValue} data= {this.props.data}/>
+							<LineChart strokeWidth = {this.state.inputValue} data= {this.props.data} lineNames={this.props.lineNames}/>
 						</g>
 					</svg>	
 				</div>
@@ -271,27 +271,61 @@ class ContentBody extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.handleFlushData = this.handleFlushData.bind(this);
+		this.handleFlushBarData = this.handleFlushBarData.bind(this);
+		this.handleFlushLineData = this.handleFlushLineData.bind(this);
+		//barchart
 		var datatmp = [];
 		var dataCount = 20;
 		for (var i = 0; i < dataCount; i++) {
 			datatmp.push(Math.round(Math.random() * 500));
 		}
+		//linechart
+		var lineNum = Math.round(Math.random() * 10) % 3 + 1;
+		var dataNum = Math.round(Math.round(Math.random() * 10)) + 5;
+		var dataset = [];
+		var lineNames = [];
+		for (var i = 0; i < lineNum; i++) {
+			var tempArr = [];
+			for (var j = 1; j < dataNum; j++) {
+				tempArr.push(Math.round(Math.random() * 529.5));
+			}
+			dataset.push(tempArr);
+			lineNames.push("系列" + i);
+		}
 		this.state = {
-			data: datatmp
+			barData: datatmp,
+			lineData: dataset,
+			lineNames: lineNames
 		};
 		//console.log(this.state.data);
 	}
-	handleFlushData() {
+	handleFlushBarData() {
 		var datatmp = [];
 		var dataCount = 20; //to modify
 		for (var i = 0; i < dataCount; i++) {
 			datatmp.push(Math.round(Math.random() * 500));
 		}
 		this.setState({
-			data: datatmp
+			barData: datatmp
 		});
-		//console.log(this.state.data);
+	}
+	handleFlushLineData() {
+		var lineNum = Math.round(Math.random() * 10) % 3 + 1;
+		var dataNum = Math.round(Math.round(Math.random() * 10)) + 5;
+		var dataset = [];
+		var lineNames = [];
+		for (var i = 0; i < lineNum; i++) {
+			var tempArr = [];
+			for (var j = 1; j < dataNum; j++) {
+				tempArr.push(Math.round(Math.random() * 529.5));
+			}
+			dataset.push(tempArr);
+			lineNames.push("系列" + i);
+		}
+		this.setState({
+			lineData: dataset,
+			lineNames: lineNames
+		});
 	}
 	// <ContentScheduleBar data={this.state.data} type = {"barchart"}/>		      
 	render() {
@@ -303,8 +337,8 @@ class ContentBody extends React.Component {
 	              			<h3 className="box-title">BarChart</h3>
 	              		</div>
 			            <div className="box-body">	
-							<button className="btn btn-success" style={{marginLeft: '10px', marginBottom: '10px'}} onClick={this.handleFlushData}>刷新数据</button>
-							<ContentScheduleBar data={this.state.data} type = {"barchart"}/>			     
+							<button className="btn btn-success" style={{marginLeft: '10px', marginBottom: '10px'}} onClick={this.handleFlushBarData}>刷新数据</button>
+							<ContentScheduleBar data={this.state.barData} type = {"barchart"}/>			     
 			             </div>
 			        </div>
 			    </div>
@@ -314,8 +348,8 @@ class ContentBody extends React.Component {
 	              			<h3 className="box-title">LineChart</h3>
 	              		</div>
 			            <div className="box-body">							
-			            	<button className="btn btn-success" style={{marginLeft: '10px', marginBottom: '10px'}} onClick={this.handleFlushData}>刷新数据</button>	
-							<ContentScheduleBar data={this.state.data} type = {"linechart"}/>	
+			            	<button className="btn btn-success" style={{marginLeft: '10px', marginBottom: '10px'}} onClick={this.handleFlushLineData}>刷新数据</button>	
+							<ContentScheduleBar data={this.state.lineData} lineNames = {this.state.lineNames}type = {"linechart"}/>	
 			            </div>
 			        </div>
 			    </div>

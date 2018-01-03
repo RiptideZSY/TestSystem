@@ -1,4 +1,4 @@
-import d3 from 'd3'
+import * as d3 from 'd3'
 import D3Component from './d3Component'
 
 export default class LineChart extends D3Component {
@@ -71,21 +71,21 @@ export default class LineChart extends D3Component {
 		var maxdata = getMaxdata(dataset);
 
 		//横坐标轴比例尺
-		var xScale = d3.scale.linear()
+		var xScale = d3.scaleLinear()
 			.domain([0, dataset[0].length - 1])
 			.range([padding, w - padding]);
 
 		//纵坐标轴比例尺
-		var yScale = d3.scale.linear()
+		var yScale = d3.scaleLinear()
 			.domain([0, maxdata])
 			.range([h - foot_height, head_height]);
 
 		//定义横轴网格线
-		var xInner = d3.svg.axis()
+		var xInner = d3.axisBottom()
 			.scale(xScale)
 			.tickSize(-(h - head_height - foot_height), 0, 0)
 			.tickFormat("")
-			.orient("bottom")
+			//.orient("bottom")
 			.ticks(dataset[0].length);
 
 		//添加横轴网格线
@@ -95,11 +95,11 @@ export default class LineChart extends D3Component {
 			.call(xInner);
 
 		//定义纵轴网格线
-		var yInner = d3.svg.axis()
+		var yInner = d3.axisLeft()
 			.scale(yScale)
 			.tickSize(-(w - padding * 2), 0, 0)
 			.tickFormat("")
-			.orient("left")
+			//.orient("left")
 			.ticks(10);
 
 		//添加纵轴网格线
@@ -108,9 +108,9 @@ export default class LineChart extends D3Component {
 			.attr("transform", "translate(" + padding + ",0)")
 			.call(yInner);
 		//定义横轴
-		var xAxis = d3.svg.axis()
+		var xAxis = d3.axisBottom()
 			.scale(xScale)
-			.orient("bottom")
+			//.orient("bottom")
 			.ticks(dataset[0].length);
 
 		//添加横坐标轴
@@ -126,9 +126,9 @@ export default class LineChart extends D3Component {
 			});
 
 		//定义纵轴
-		var yAxis = d3.svg.axis()
+		var yAxis = d3.axisLeft()
 			.scale(yScale)
-			.orient("left")
+			//.orient("left")
 			.ticks(10);
 
 		//添加纵轴
@@ -221,7 +221,7 @@ export default class LineChart extends D3Component {
 				var arr = dataset[id];
 				this.group = svg.append("g");
 
-				var line = d3.svg.line()
+				var line = d3.line()
 					.x(function(d, i) {
 						return xScale(i);
 					})
@@ -233,7 +233,7 @@ export default class LineChart extends D3Component {
 				this.path = this.group.append("path")
 					.attr("d", line(arr))
 					.style("fill", "none")
-					.style("stroke-width", strokeWidth * 0.3)
+					.style("stroke-width", strokeWidth * 0.2)
 					.style("stroke", lineColor[id])
 					.style("stroke-opacity", 0.9);
 
@@ -245,7 +245,7 @@ export default class LineChart extends D3Component {
 				var arr = dataset[i];
 				//补足/删除路径
 				var olddata = this.oldData;
-				var line = d3.svg.line()
+				var line = d3.line()
 					.x(function(d, i) {
 						if (i >= olddata.length) return w - padding;
 						else return xScale(i);
@@ -268,7 +268,7 @@ export default class LineChart extends D3Component {
 			//重绘加动画效果
 			this.reDraw = function(id, _duration) {
 				var arr = dataset[i];
-				var line = d3.svg.line()
+				var line = d3.line()
 					.x(function(d, i) {
 						return xScale(i);
 					})

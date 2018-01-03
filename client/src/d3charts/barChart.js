@@ -1,4 +1,4 @@
-import d3 from 'd3'
+import * as d3 from 'd3'
 import D3Component from './d3Component'
 // import {
 // 	observer
@@ -39,12 +39,13 @@ export default class BarChart extends D3Component {
 			.style('border', '1px #333 solid')
 			.style('border-radius', '5px')
 			.style('opacity', '0');
-		var yScale = d3.scale.linear()
+		var yScale = d3.scaleLinear()
 			.domain([0, d3.max(myData)])
 			.range([0, height]);
-		var xScale = d3.scale.ordinal()
+		var xScale = d3.scaleBand()
 			.domain(d3.range(0, myData.length))
-			.rangeBands([0, width]);
+			.range([0, width]);
+		//.rangeBands([0, width]);
 		var color = ['#757575', '#43A047'];
 		var colors = [];
 		for (var i = 0; i < dataCount; i++) {
@@ -67,7 +68,8 @@ export default class BarChart extends D3Component {
 			.style('fill', function(d, i) {
 				return colors[i];
 			})
-			.attr('width', xScale.rangeBand() * widthPercent * 0.01)
+			//.attr('width', xScale.rangeBand() * widthPercent * 0.01)
+			.attr('width', width / dataCount * widthPercent * 0.01)
 			.attr('height', 0)
 			.attr('x', function(d, i) {
 				return xScale(i);
@@ -98,15 +100,16 @@ export default class BarChart extends D3Component {
 		// 	return i * animateDelay
 		// })
 		// .ease('elastic');
-		var vScale = d3.scale.linear()
+		var vScale = d3.scaleLinear()
 			.domain([0, d3.max(myData)])
 			.range([height, 0]);
-		var hScale = d3.scale.ordinal()
+		var hScale = d3.scaleBand()
 			.domain(d3.range(0, myData.length))
-			.rangeBands([0, width]);
-		var vAxis = d3.svg.axis()
+			.range([0, width]);
+		//.rangeBands([0, width]);
+		var vAxis = d3.axisLeft()
 			.scale(vScale)
-			.orient('left')
+			//.orient('left')
 			.ticks(5)
 			.tickPadding(5);
 		var vGuide = d3.select(gDOM).select('svg')
@@ -118,9 +121,9 @@ export default class BarChart extends D3Component {
 			.style('stroke', '#000')
 		vGuide.selectAll('line')
 			.style('stroke', '#000');
-		var hAxis = d3.svg.axis()
+		var hAxis = d3.axisBottom()
 			.scale(hScale)
-			.orient('bottom')
+			//.orient('bottom')
 			.tickValues(hScale.domain().filter(function(d, i) {
 				return !(i % (myData.length / 5));
 			}));

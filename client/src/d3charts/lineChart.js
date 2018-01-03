@@ -13,6 +13,8 @@ export default class LineChart extends D3Component {
 			data,
 			lineNames
 		} = props;
+		d3.select(gDOM).select('svg').selectAll('g').remove();
+		d3.select(gDOM).select('svg').remove();
 		var dataset = [];
 		//var lines = []; //保存折线图对象
 		var lines = [];
@@ -149,67 +151,6 @@ export default class LineChart extends D3Component {
 			newLine.init(i);
 			lines.push(newLine);
 		}
-
-		//重新作图//之后添加刷新按钮时调用
-		// function drawChart() {
-		// 	var _duration = 1000;
-
-		// 	getData();
-
-		// 	addLegend();
-
-		// 	//设置线条动画起始位置
-		// 	var lineObject = new CrystalLineObject();
-
-		// 	for (var i = 0; i < dataset.length; i++) {
-		// 		if (i < currentLineNum) {
-		// 			//对已有的线条做动画
-		// 			lineObject = lines[i];
-		// 			lineObject.movieBegin(i);
-		// 		} else {
-		// 			//如果现有线条不够，就加上一些
-		// 			var newLine = new CrystalLineObject();
-		// 			newLine.init(i);
-		// 			lines.push(newLine);
-		// 		}
-		// 	}
-
-		// 	//删除多余的线条，如果有的话
-		// 	if (dataset.length < currentLineNum) {
-		// 		for (i = dataset.length; i < currentLineNum; i++) {
-		// 			lineObject = lines[i];
-		// 			lineObject.remove();
-		// 		}
-		// 		lines.splice(dataset.length, currentLineNum - dataset.length);
-		// 	}
-
-		// 	maxdata = getMaxdata(dataset);
-		// 	newLength = dataset[0].length;
-
-		// 	//横轴数据动画
-		// 	xScale.domain([0, newLength - 1]);
-		// 	xAxis.scale(xScale).ticks(newLength);
-		// 	xBar.transition().duration(_duration).call(xAxis);
-		// 	xBar.selectAll("text").text(function(d) {
-		// 		return xMarks[d];
-		// 	});
-		// 	xInner.scale(xScale).ticks(newLength);
-		// 	xInnerBar.transition().duration(_duration).call(xInner);
-
-		// 	//纵轴数据动画
-		// 	yScale.domain([0, maxdata]);
-		// 	yBar.transition().duration(_duration).call(yAxis);
-		// 	yInnerBar.transition().duration(_duration).call(yInner);
-
-		// 	//开始线条动画
-		// 	for (i = 0; i < lines.length; i++) {
-		// 		lineObject = lines[i];
-		// 		lineObject.reDraw(i, _duration);
-		// 	}
-
-		// 	currentLineNum = dataset.length;
-		// 	dataLength = newLength;
-		// }
 
 		//定义折线类
 		function CrystalLineObject() {

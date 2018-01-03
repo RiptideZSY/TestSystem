@@ -107,10 +107,10 @@ function ContentProgressBar(props) {
 			</div>*/
 function ScheduleBar(props) {
 	return (
-		<div id="scheduleBar" onMouseMove={props.onMouseMove} onMouseUp={props.onMouseUp}>        		
+		<div id="scheduleBar">        		
 	        <input type="text" value={props.inputValue} autoComplete="off" onChange={props.onChange}/>%
 	        <div id="backBar">
-	            <div id="circle" onMouseDown={props.onMouseDown} style={props.styleCircle}></div>
+	            <div id={props.circleId} onMouseDown={props.onMouseDown} style={props.styleCircle}></div>
 	            <div id="frontBar" style={props.styleFrontBar}></div>
 	        </div>
         </div>
@@ -132,7 +132,7 @@ class ContentScheduleBar extends React.Component {
 		// }
 		this.state = {
 			isfalse: false, //控制鼠标点击
-			inputValue: 0,
+			inputValue: "",
 			x: 0,
 			offsetLeft: 0, //圆离最左边的距离
 			barWidth: 0, //进度条的总宽度
@@ -144,10 +144,11 @@ class ContentScheduleBar extends React.Component {
 	//控制鼠标点击拖动
 	handleMouseDown(event) {
 		var currentX = event.clientX;
-		var circle = document.getElementById("circle");
+		var circle = (this.props.type == "linechart") ? document.getElementById("linechart") : document.getElementById("barchart");
 		var offleft = circle.offsetLeft;
-		var backBar = document.getElementById("backBar");
-		var max = backBar.offsetWidth - circle.offsetWidth;
+		//var backBar = document.getElementById("backBar");
+		//var max = backBar.offsetWidth - circle.offsetWidth;//200-12
+		var max = 188;
 		this.setState({
 			isfalse: true,
 			x: currentX,
@@ -193,8 +194,10 @@ class ContentScheduleBar extends React.Component {
 				frontBarWidth: "0px"
 			});
 		} else {
-			var backBar = document.getElementById("backBar");
-			var val = currentValue / 100 * backBar.offsetWidth;
+			//var backBar = document.getElementById("backBar");
+			//var val = currentValue / 100 * backBar.offsetWidth;
+			//console.log("backBar.offsetWidth" + backBar.offsetWidth);
+			var val = currentValue * 2;
 			this.setState({
 				inputValue: currentValue,
 				circleMarginLeft: val + "px",
@@ -220,20 +223,39 @@ class ContentScheduleBar extends React.Component {
 			width: this.state.frontBarWidth
 		};
 		//var arr = ["宽度", "坐标轴", "整体"];
-		return (
-			<div>
-				<ScheduleBar onMouseMove={this.handleMouseMove} onMouseUp={this.handleMouseUp}
-				onChange={this.handleInputChange} onMouseDown={this.handleMouseDown} styleCircle={styleCircle}
-				styleFrontBar = {styleFrontBar} inputValue={this.state.inputValue}/>
-				
-				
-        		<svg id="main-svg" style={{width: 529.5, height: 529.5, top: 0, left: 0}}>
-			        <g>
-						<BarChart widthPercent = {this.state.inputValue} data= {this.props.data}/>
-			        </g>
-			    </svg>		       
-			</div>
-		);
+		if (this.props.type == "barchart") {
+			//console.log("barchart:" + this.state.inputValue);
+			return (
+				<div onMouseMove={this.handleMouseMove} onMouseUp={this.handleMouseUp}>
+					<ScheduleBar circleId={this.props.type}
+					onChange={this.handleInputChange} onMouseDown={this.handleMouseDown} styleCircle={styleCircle}
+					styleFrontBar = {styleFrontBar} inputValue={this.state.inputValue}/>
+					
+					
+	        		<svg id="main-svg" style={{width: 529.5, height: 529.5, top: 0, left: 0}}>
+				        <g>
+							<BarChart widthPercent = {this.state.inputValue} data= {this.props.data}/>
+				        </g>
+				    </svg>		       
+				</div>
+			);
+		} else if (this.props.type == "linechart") {
+			//console.log("linechart:" + this.state.inputValue);
+			return (
+				<div onMouseMove={this.handleMouseMove} onMouseUp={this.handleMouseUp}>
+					<ScheduleBar circleId={this.props.type}
+					onChange={this.handleInputChange} onMouseDown={this.handleMouseDown} styleCircle={styleCircle}
+					styleFrontBar = {styleFrontBar} inputValue={this.state.inputValue}/>
+					
+					<svg id="main-svg" style={{width: 529.5, height: 529.5, top: 0, left: 0}}>
+						<g>
+							<LineChart strokeWidth = {this.state.inputValue} data= {this.props.data}/>
+						</g>
+					</svg>	
+				</div>
+			);
+		}
+
 	}
 
 }
@@ -262,16 +284,16 @@ class ContentBody extends React.Component {
 	}
 	handleFlushData() {
 		var datatmp = [];
-		var dataCount = 20;
+		var dataCount = 20; //to modify
 		for (var i = 0; i < dataCount; i++) {
 			datatmp.push(Math.round(Math.random() * 500));
 		}
 		this.setState({
 			data: datatmp
 		});
-		console.log(this.state.data);
+		//console.log(this.state.data);
 	}
-
+	// <ContentScheduleBar data={this.state.data} type = {"barchart"}/>		      
 	render() {
 		return (
 			<div className="row">
@@ -281,8 +303,8 @@ class ContentBody extends React.Component {
 	              			<h3 className="box-title">BarChart</h3>
 	              		</div>
 			            <div className="box-body">	
-			           		<button className="btn btn-success" onClick={this.handleFlushData}>刷新数据</button>           	
-							<ContentScheduleBar data={this.state.data}/>		             		     
+							<button className="btn btn-success" style={{marginLeft: '10px', marginBottom: '10px'}} onClick={this.handleFlushData}>刷新数据</button>
+							<ContentScheduleBar data={this.state.data} type = {"barchart"}/>			     
 			             </div>
 			        </div>
 			    </div>
@@ -291,13 +313,9 @@ class ContentBody extends React.Component {
 	            		<div className="box-header with-border">
 	              			<h3 className="box-title">LineChart</h3>
 	              		</div>
-			            <div className="box-body">
-							
-			            	<svg id="main-svg" style={{width: 529.5, height: 529.5, top: 0, left: 0}}>
-						        <g>
-									<LineChart />
-						        </g>
-						    </svg>	
+			            <div className="box-body">							
+			            	<button className="btn btn-success" style={{marginLeft: '10px', marginBottom: '10px'}} onClick={this.handleFlushData}>刷新数据</button>	
+							<ContentScheduleBar data={this.state.data} type = {"linechart"}/>	
 			            </div>
 			        </div>
 			    </div>

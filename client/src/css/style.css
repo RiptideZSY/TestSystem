@@ -17,7 +17,7 @@
     margin-left: 10px;
 }
 
-#circle {
+#linechart, #barchart {
     display: inline-block;
     width: 12px;
     height: 12px;

@@ -320,7 +320,7 @@ class ContentBody extends React.Component {
 				tempArr.push(Math.round(Math.random() * 529.5));
 			}
 			dataset.push(tempArr);
-			lineNames.push("系列" + i);
+			lineNames.push("line" + i);
 		}
 		this.setState({
 			lineData: dataset,

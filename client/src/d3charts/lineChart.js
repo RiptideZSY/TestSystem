@@ -19,7 +19,6 @@ export default class LineChart extends D3Component {
 		//var lines = []; //保存折线图对象
 		var lines = [];
 		var xMarks = [];
-		//var lineNames = ["line1"]; //保存系列名称
 		var lineColor = ["#757575", "#43A047", "#795548"];
 		var w = 529.5;
 		var h = 529.5;
@@ -272,32 +271,6 @@ export default class LineChart extends D3Component {
 
 			legend.attr("transform", "translate(" + ((w - lineNames.length * 100) / 2) + "," + (h - 10) + ")");
 		}
-
-		//产生随机数据
-		// function getData() {
-		// 	var lineNum = Math.round(Math.random() * 10) % 3 + 1;
-		// 	var dataNum = Math.round(Math.round(Math.random() * 10)) + 5;
-		// 	console.log("datanum:" + dataNum);
-		// 	//oldData = dataset;
-		// 	dataset = [];
-		// 	xMarks = [];
-		// 	lineNames = [];
-
-		// 	for (var i = 0; i < dataNum; i++) {
-		// 		xMarks.push(i);
-		// 	}
-		// 	for (var i = 0; i < lineNum; i++) {
-		// 		var tempArr = [];
-		// 		for (var j = 1; j < dataNum; j++) {
-		// 			tempArr.push(Math.round(Math.random() * h));
-		// 		}
-		// 		dataset.push(tempArr);
-		// 		lineNames.push("系列" + i);
-		// 	}
-		// 	console.log("dataset:" + dataset);
-		// 	console.log("lineNames:" + lineNames);
-		// 	console.log("xMarks:" + xMarks);
-		// }
 
 		//取得多维数组最大值
 		function getMaxdata(arr) {

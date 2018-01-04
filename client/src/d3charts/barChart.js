@@ -88,18 +88,12 @@ export default class BarChart extends D3Component {
 					.style('opacity', 0)
 				d3.select(this).style('opacity', 1)
 			});
-		myChart.transition()
-			.attr('height', function(d) {
+		myChart.attr('height', function(d) {
 				return yScale(d);
 			})
 			.attr('y', function(d) {
 				return height - yScale(d)
 			});
-		//.duration(animateDuration)
-		// .delay(function(d, i) {
-		// 	return i * animateDelay
-		// })
-		// .ease('elastic');
 		var vScale = d3.scaleLinear()
 			.domain([0, d3.max(myData)])
 			.range([height, 0]);

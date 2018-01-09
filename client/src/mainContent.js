@@ -8,6 +8,7 @@ import {
 import {
 	observable
 } from 'mobx';
+import $ from 'jquery';
 
 function PreviousButton(props) {
 	return (
@@ -124,6 +125,7 @@ class ContentScheduleBar extends React.Component {
 		this.handleMouseMove = this.handleMouseMove.bind(this);
 		this.handleMouseUp = this.handleMouseUp.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
+		this.handleSaveLinechartData = this.handleSaveLinechartData.bind(this);
 		//this.handleFlushData = this.handleFlushData.bind(this);
 		// var datatmp = [];
 		// var dataCount = 20;
@@ -205,6 +207,25 @@ class ContentScheduleBar extends React.Component {
 			});
 		}
 	}
+
+	handleSaveLinechartData() {
+		var data = {
+			"type": this.props.type,
+			"width": this.state.inputValue,
+			"data": this.props.data
+		};
+		$.ajax({
+			url: 'http://localhost:3000/linechart/',
+			type: 'POST',
+			dataType: 'json',
+			data: data,
+			success: (data) => {
+
+				console.log(data);
+			}
+		});
+	}
+
 	// handleFlushData() {
 	// 	var datatmp = [];
 	// 	var dataCount = 20;
@@ -227,6 +248,7 @@ class ContentScheduleBar extends React.Component {
 			//console.log("barchart:" + this.state.inputValue);
 			return (
 				<div onMouseMove={this.handleMouseMove} onMouseUp={this.handleMouseUp}>
+					<button className="btn btn-success" style={{marginLeft: '10px', marginBottom: '10px'}} onClick={this.handleSaveLinechartData}>保存</button>
 					<ScheduleBar circleId={this.props.type}
 					onChange={this.handleInputChange} onMouseDown={this.handleMouseDown} styleCircle={styleCircle}
 					styleFrontBar = {styleFrontBar} inputValue={this.state.inputValue}/>
@@ -243,6 +265,7 @@ class ContentScheduleBar extends React.Component {
 			//console.log("linechart:" + this.state.inputValue);
 			return (
 				<div onMouseMove={this.handleMouseMove} onMouseUp={this.handleMouseUp}>
+					<button className="btn btn-success" style={{marginLeft: '10px', marginBottom: '10px'}} onClick={this.handleSaveLinechartData}>保存</button>
 					<ScheduleBar circleId={this.props.type}
 					onChange={this.handleInputChange} onMouseDown={this.handleMouseDown} styleCircle={styleCircle}
 					styleFrontBar = {styleFrontBar} inputValue={this.state.inputValue}/>

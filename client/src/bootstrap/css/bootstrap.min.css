@@ -3103,7 +3103,7 @@ input[type=file] {
 }
 
 input[type=range] {
-    display: block;
+    /*display: block;*/
     width: 100%
 }
 

@@ -28,8 +28,8 @@ export default class BarChart extends D3Component {
 			bottom: 40,
 			left: 50
 		}
-		var height = 500 - margin.top - margin.bottom;
-		var width = 500 - margin.right - margin.left;
+		var height = 800 - margin.top - margin.bottom;
+		var width = 800 - margin.right - margin.left;
 		//var animateDuration = 700;
 		//var animateDelay = 30;
 		var tooltip = d3.select('body').append('div')

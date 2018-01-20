@@ -20,8 +20,8 @@ export default class LineChart extends D3Component {
 		var lines = [];
 		var xMarks = [];
 		var lineColor = ["#757575", "#43A047", "#795548"];
-		var w = 529.5;
-		var h = 529.5;
+		var w = 800;
+		var h = 800;
 		var padding = 40;
 		var currentLineNum = 0;
 

@@ -9,6 +9,12 @@ import {
 	observable
 } from 'mobx';
 import $ from 'jquery';
+import {
+	HashRouter,
+	Route,
+	Switch,
+	Redirect
+} from 'react-router-dom';
 
 function PreviousButton(props) {
 	return (
@@ -254,7 +260,7 @@ class ContentScheduleBar extends React.Component {
 					styleFrontBar = {styleFrontBar} inputValue={this.state.inputValue}/>
 					
 					
-	        		<svg id="main-svg" style={{width: 529.5, height: 529.5, top: 0, left: 0}}>
+	        		<svg id="main-svg" style={{width: 800, height: 800, top: 0, left: 0}}>
 				        <g>
 							<BarChart widthPercent = {this.state.inputValue} data= {this.props.data}/>
 				        </g>
@@ -270,7 +276,7 @@ class ContentScheduleBar extends React.Component {
 					onChange={this.handleInputChange} onMouseDown={this.handleMouseDown} styleCircle={styleCircle}
 					styleFrontBar = {styleFrontBar} inputValue={this.state.inputValue}/>
 					
-					<svg id="main-svg" style={{width: 529.5, height: 529.5, top: 0, left: 0}}>
+					<svg id="main-svg" style={{width: 800, height: 800, top: 0, left: 0}}>
 						<g>
 							<LineChart strokeWidth = {this.state.inputValue} data= {this.props.data} lineNames={this.props.lineNames}/>
 						</g>
@@ -391,9 +397,16 @@ export default class MainContent extends React.Component {
     			<section className="content">  				
 					<ContentProgressBar />
 					<ContentBody />
+					
 				</section>
 	    	</div>
 		);
 	}
 
 }
+// 
+// <Switch>
+
+// 						<Route path='barchart' component = {ContentBody} />
+// 						<Route path='linechart' component = {ContentBody} />
+// 					</Switch>

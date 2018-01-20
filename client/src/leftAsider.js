@@ -1,5 +1,7 @@
 import React from "react";
-
+import {
+	Link
+} from 'react-router-dom';
 
 function UserPanel(props) {
 	return (
@@ -12,7 +14,7 @@ function UserPanel(props) {
           		<a href="#"><i className="fa fa-circle text-success"></i> Online</a>
         	</div>
 		</div>
-		);
+	);
 }
 
 function SearchForm(props) {
@@ -27,19 +29,19 @@ function SearchForm(props) {
               	</span>
         	</div>
 		</form>
-		);
+	);
 }
 
 function SideBarMenu(props) {
 	return (
 		<ul className="sidebar-menu">
 			<li className="header">图列表</li>
-        		<li><a href="#"><i className="fa fa-circle-o text-red"></i> <span>第一张</span></a></li>
-        		<li><a href="#"><i className="fa fa-circle-o text-yellow"></i> <span>第二张</span></a></li>
-       	 		<li><a href="#"><i className="fa fa-circle-o text-aqua"></i> <span>第三张</span></a></li>
+				<li><Link to='/'><a href="#"><i className="fa fa-circle-o text-red"></i> <span>散点图</span></a></Link></li>
+        		<li><Link to='/barchart'><a href="#"><i className="fa fa-circle-o text-yellow"></i> <span>柱形图</span></a></Link></li>
+       	 		<li><Link to='/linechart'><a href="#"><i className="fa fa-circle-o text-aqua"></i> <span>折线图</span></a></Link></li>
 			<li><a href="#"><i className="fa fa-circle-o text-blue"></i> <span>...</span></a></li>
 	 	</ul>
-		);
+	);
 }
 
 function SideBar(props) {
@@ -49,7 +51,7 @@ function SideBar(props) {
 			<SearchForm />
 			<SideBarMenu />
 		</section>
-		);
+	);
 }
 
 export default class LeftAsider extends React.Component {

@@ -9,8 +9,13 @@ const fs = require("fs");
 
 router.post("/", function(req, res) {
 	console.log(req.body);
-	//console.log(process.cwd());
-	fs.readFile('./data/scatterPlot.json', 'utf-8', function(err, data) {
+	var myDate = new Date();
+	myDate.toLocaleDateString(); //获取当前日期
+	var date = myDate.toLocaleString().replace(/:/g, '-');
+	var filename = './data/' + date + '.json';
+	fs.createWriteStream(filename);
+	//console.log(filename);
+	fs.readFile(filename, 'utf-8', function(err, data) {
 		if (err) {
 			console.log("fail");
 			res.send("failed to read file");
@@ -23,11 +28,12 @@ router.post("/", function(req, res) {
 			} else {
 				str = JSON.stringify(req.body);
 			}
-			fs.writeFileSync('./data/scatterPlot.json', str);
+			fs.writeFileSync(filename, str);
 			res.send("succeed to write file");
 		}
 	})
 
 });
+
 
 module.exports = router;

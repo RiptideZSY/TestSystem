@@ -632,7 +632,8 @@ export default class ScatterPlot extends D3Component {
 			appendRatioChooser('aspectRatio');
 			appendButton('test reset', () => test.reset());
 			appendButton('test next', () => test.next());
-			appendButton('save', () => test.save());
+			appendButton('save results', () => test.save());
+			appendButton('save data', () => test.saveData());
 			resultGraph = appendBlank();
 			//resultGraph = controls;
 		}
@@ -706,58 +707,55 @@ export default class ScatterPlot extends D3Component {
 		}
 
 		var test = (function() {
-			const TESTS = [
-				{
-					circleR: 1,
-					width: 900,
-					height: 900
-				}, {
-					circleR: 1,
-					width: 850,
-					height: 850
-				}, {
-					circleR: 1,
-					width: 800,
-					height: 800
-				}, {
-					circleR: 1,
-					width: 750,
-					height: 750
-				},
-				{
-					circleR: 1,
-					width: 700,
-					height: 700
-				}, {
-					circleR: 1,
-					width: 650,
-					height: 650
-				}, {
-					circleR: 1,
-					width: 600,
-					height: 600
-				}, {
-					circleR: 1,
-					width: 550,
-					height: 550
-				}, {
-					circleR: 1,
-					width: 500,
-					height: 500
-				}, {
-					circleR: 1,
-					width: 450,
-					height: 450
-				}, {
-					circleR: 1,
-					width: 400,
-					height: 400
-				}, {
-					circleR: 1,
-					width: 350,
-					height: 350
-				},
-			];
+			const TESTS = [{
+				circleR: 1,
+				width: 900,
+				height: 900
+			}, {
+				circleR: 1,
+				width: 850,
+				height: 850
+			}, {
+				circleR: 1,
+				width: 800,
+				height: 800
+			}, {
+				circleR: 1,
+				width: 750,
+				height: 750
+			}, {
+				circleR: 1,
+				width: 700,
+				height: 700
+			}, {
+				circleR: 1,
+				width: 650,
+				height: 650
+			}, {
+				circleR: 1,
+				width: 600,
+				height: 600
+			}, {
+				circleR: 1,
+				width: 550,
+				height: 550
+			}, {
+				circleR: 1,
+				width: 500,
+				height: 500
+			}, {
+				circleR: 1,
+				width: 450,
+				height: 450
+			}, {
+				circleR: 1,
+				width: 400,
+				height: 400
+			}, {
+				circleR: 1,
+				width: 350,
+				height: 350
+			}, ];
 
 			let i = -1,
 				records = [];
@@ -791,7 +789,7 @@ export default class ScatterPlot extends D3Component {
 				// var test = '{\"' + myDate.toLocaleString() + '\":' + JSON.stringify(records) + '}';
 				var data = JSON.stringify(records);
 				$.ajax({
-					url: 'http://localhost:3000/scatterPlot/',
+					url: 'http://localhost:3000/scatterPlot/saveResults',
 					type: 'POST',
 					contentType: "application/json; charset=utf-8",
 					data: data,
@@ -801,6 +799,19 @@ export default class ScatterPlot extends D3Component {
 				});
 			}
 
+			var saveData = function() {
+				console.log("save dataset");
+				var data = JSON.stringify(dataset);
+				$.ajax({
+					url: 'http://localhost:3000/scatterPlot/saveData',
+					type: 'POST',
+					contentType: "application/json; charset=utf-8",
+					data: data,
+					success: (data) => {
+						console.log(data);
+					}
+				});
+			}
 
 			function drawResult(container, data0, attrX, attrY) {
 				//console.log(data0);
@@ -931,7 +942,8 @@ export default class ScatterPlot extends D3Component {
 			return {
 				reset,
 				next,
-				save
+				save,
+				saveData
 			}
 		})();
 

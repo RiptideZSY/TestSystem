@@ -13,7 +13,7 @@ export default class HeatmapContent extends React.Component {
 		//var data = this.generateData(700, 700, 300);
 		this.state = {
 			kernelWidth: 20,
-			pointRadius: 10,
+			pointRadius: 1,
 			data: null
 		}
 	}
@@ -24,6 +24,7 @@ export default class HeatmapContent extends React.Component {
 	generateData(width, height, len) {
 		var points = [];
 		var max = 0;
+		console.log(this.state.pointRadius);
 		while (len--) {
 			var val = Math.floor(Math.random() * 100);
 			var radius = Math.floor(Math.random() * this.state.pointRadius);
@@ -124,7 +125,7 @@ export default class HeatmapContent extends React.Component {
 		//options
 		var parameters = {
 			kernelWidth: 20,
-			pointRadius: 10
+			pointRadius: 1
 		};
 		var controls = d3.select('.heatmapOptions');
 		this.appendNumberChooser('kernelWidth', 1, 100, controls, parameters);
@@ -146,7 +147,7 @@ export default class HeatmapContent extends React.Component {
         				<div className="col-md-8">
         					<div className="box box-solid">
 	            				<div className="box-header with-border">
-	              					<h3 className="box-title">ScatterPlot</h3>
+	              					<h3 className="box-title">Heatmap</h3>
 	              				</div>
 				            	<div className="box-body">	
 			     					<div style = {{ width:700, height: 700, top: 0, left: 0}}>

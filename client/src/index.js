@@ -4,6 +4,7 @@ import MainFooter from "./mainFooter";
 import MainContent from "./mainContent";
 
 import ScatterContent from './ScatterContent';
+import HeatmapContent from "./heatmapContent";
 import React from "react";
 import ReactDOM from "react-dom";
 
@@ -45,6 +46,7 @@ const Chart = () => (
 		<LeftAsider />
 		<Switch>	
 			<Route exact path='/' component = {ScatterContent} />
+			<Route path='/heatmap' component = {HeatmapContent} />
 			<Route path='/barchart' component = {MainContent} />
 			<Route path='/linechart' component = {MainContent} />
 		</Switch>

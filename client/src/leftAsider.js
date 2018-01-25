@@ -36,10 +36,10 @@ function SideBarMenu(props) {
 	return (
 		<ul className="sidebar-menu">
 			<li className="header">图列表</li>
-				<li><Link to='/'><a href="#"><i className="fa fa-circle-o text-red"></i> <span>散点图</span></a></Link></li>
-        		<li><Link to='/barchart'><a href="#"><i className="fa fa-circle-o text-yellow"></i> <span>柱形图</span></a></Link></li>
-       	 		<li><Link to='/linechart'><a href="#"><i className="fa fa-circle-o text-aqua"></i> <span>折线图</span></a></Link></li>
-			<li><a href="#"><i className="fa fa-circle-o text-blue"></i> <span>...</span></a></li>
+				<li><Link to='/'><a href="#"><span>ScatterPlot</span></a></Link></li>
+				<li><Link to='/heatmap'><a href="#"><span>Heatmap</span></a></Link></li>
+        		<li><Link to='/barchart'><a href="#"><span>BarChart</span></a></Link></li>
+       	 		<li><Link to='/linechart'><a href="#"> <span>LineChart</span></a></Link></li>
 	 	</ul>
 	);
 }

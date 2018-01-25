@@ -1,4 +1,5 @@
-let dataGeneration = (function() {
+import * as d3 from 'd3';
+export let dataGeneration = (function() {
 
   let parameters = {
     xDomain: [0, 50],

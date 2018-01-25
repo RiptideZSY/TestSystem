@@ -1,32 +1,69 @@
 import React from "react";
 import Heatmap from "heatmapjs";
 import * as d3 from 'd3';
-import {
-	generateData
-} from './myfunction';
+// import {
+// 	generateData
+// } from './myfunction';
 export default class HeatmapContent extends React.Component {
 	constructor(props) {
 		super(props);
 		this.draw = this.draw.bind(this);
 		this.handleFlushData = this.handleFlushData.bind(this);
-		var data = generateData(700, 700, 300);
+		this.generateData = this.generateData.bind(this);
+		//var data = this.generateData(700, 700, 300);
 		this.state = {
 			kernelWidth: 20,
-			data: data
+			pointRadius: 10,
+			data: null
 		}
 	}
 	componentDidMount() {
-		this.draw(this.state.data);
+		this.draw(this.generateData(700, 700, 300));
 		this.drawParameters();
 	}
+	generateData(width, height, len) {
+		var points = [];
+		var max = 0;
+		while (len--) {
+			var val = Math.floor(Math.random() * 100);
+			var radius = Math.floor(Math.random() * this.state.pointRadius);
+
+			max = Math.max(max, val);
+			var point = {
+				x: Math.floor(Math.random() * width),
+				y: Math.floor(Math.random() * height),
+				value: val,
+				radius: radius
+			};
+			points.push(point);
+		}
+		// heatmap data format
+		var data = {
+			max: max,
+			data: points
+		};
+		this.setState({
+			data: data
+		})
+		return data;
+	}
+
 	handleParametersUpdated(parameters, name) {
-		if (name == 'kernelWidth') {
+		if (name == 'kernelWidth' || name == 'pointRadius') {
 			d3.select(`#${name}-slider`).node().value = +parameters[name];
 			d3.select(`#${name}-spin`).node().value = +parameters[name];
 		}
-		this.setState({
-			kernelWidth: d3.select(`#${name}-slider`).node().value
-		})
+		if (name == 'kernelWidth') {
+			this.setState({
+				kernelWidth: d3.select(`#${name}-slider`).node().value
+			})
+		}
+		if (name == 'pointRadius') {
+			this.setState({
+				pointRadius: d3.select(`#${name}-slider`).node().value
+			})
+		}
+
 		d3.select('#heatmap').selectAll('*').remove();
 		this.draw(null);
 	}
@@ -67,7 +104,6 @@ export default class HeatmapContent extends React.Component {
 		return numberChooser;
 	}
 	draw(data) {
-		console.log("in draw:" + this.state.kernelWidth);
 		var heatmapInstance = Heatmap.create({
 			// required container
 			container: document.getElementById('heatmap'),
@@ -81,21 +117,22 @@ export default class HeatmapContent extends React.Component {
 			maxOpacity: .9,
 			minOpacity: .3
 		});
-
 		heatmapInstance.setData((data == null) ? this.state.data : data);
 	}
 
 	drawParameters() {
 		//options
 		var parameters = {
-			kernelWidth: 20
+			kernelWidth: 20,
+			pointRadius: 10
 		};
 		var controls = d3.select('.heatmapOptions');
 		this.appendNumberChooser('kernelWidth', 1, 100, controls, parameters);
+		this.appendNumberChooser('pointRadius', 1, 100, controls, parameters);
 	}
 
 	handleFlushData() {
-		var data = generateData(700, 700, 300);
+		var data = this.generateData(700, 700, 300);
 		this.setState({
 			data: data
 		});
@@ -112,7 +149,7 @@ export default class HeatmapContent extends React.Component {
 	              					<h3 className="box-title">ScatterPlot</h3>
 	              				</div>
 				            	<div className="box-body">	
-			     					<div id = "heatmapContainer" style = {{ width:700, height: 700, top: 0, left: 0}}>
+			     					<div style = {{ width:700, height: 700, top: 0, left: 0}}>
 										<div id = "heatmap" style = {{width: "100%", height: "100%"}} />
 									</div>
 				             	</div>
